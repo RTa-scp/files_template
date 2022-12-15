@@ -11,6 +11,7 @@
                 let params = urlparam.split(/[&=]/);
                 let mode = params[1];
                 let userid = params[3];
+                let site = window.location.search.split("site=")[1];
                 //4桁乱数生成
                 let charset = "abcdefghijklmnopqrstuvwxyz0123456789";
                 let random = "";
@@ -19,10 +20,10 @@
                 }
                 //１ページ目 or 2ページ目以降
                 if (mode === "first") {
-                    top.location.href = `http://scp-jp-storage.wikidot.com/file:${userid}-1-${random}/parentPage/portal:${userid}/title/無題のファイル(1)/#_editpage`;
+                    top.location.href = `http://${site}.wikidot.com/file:${userid}-1-${random}/parentPage/portal:${userid}/title/無題のファイル(1)/#_editpage`;
                 } else if (mode === "normal") {
                     let filecount = Number(params[5].split(/-/)[1]) + 1;
-                    top.location.href = `http://scp-jp-storage.wikidot.com/file:${userid}-${filecount}-${random}/parentPage/portal:${userid}/title/無題のファイル(${filecount})/#_editpage`;
+                    top.location.href = `http://${site}.wikidot.com/file:${userid}-${filecount}-${random}/parentPage/portal:${userid}/title/無題のファイル(${filecount})/#_editpage`;
                 }
             } else {
                 alert("データ取得エラー");
