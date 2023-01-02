@@ -7,24 +7,21 @@ jobs:
     env:
       REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-
       - uses: actions/checkout@v2
       - uses: pnpm/action-setup@v2.0.1
         with:
           version: 7.0.0
-
-
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           cache: pnpm
-
       - name: Install dependencies
         run: pnpm install
-
-        
       - name: install reviewdog
         uses: reviewdog/action-setup@v1
       - name: stylecheck
-        run: pnpm stylelint "**/*.css" --no-color | reviewdog -f="stylelint" -name="stylelint" -reporter="github-pr-check" -level="warning" -filter-mode="nofilter" -fail-on-error="false"
-
+        run: pnpm run stylelint "**/*.css" --no-color | reviewdog -f="stylelint" -name="stylelint" -reporter="github-pr-check" -level="warning" -filter-mode="nofilter" -fail-on-error="false"
+      - name: apply fixes
+        run: pnpm run stylelint "**/*.css" --no-color --fix --fix-errors --fix-warnings
+      - name: commit and push
+        run: git commit -am "Apply stylelint fixes" && git push
