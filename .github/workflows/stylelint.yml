@@ -21,7 +21,5 @@ jobs:
         uses: reviewdog/action-setup@v1
       - name: stylecheck
         run: pnpm stylelint "**/*.css" --no-color --fix | reviewdog -f="stylelint" -name="stylelint" -reporter="github-pr-check" -level="error" -filter-mode="nofilter" -fail-on-error="false"
-      - name: apply fixes
-        run: pnpm stylelint "**/*.css" --no-color --fix
       - name: commit and push
         run: git commit -am "Apply stylelint fixes" && git push
