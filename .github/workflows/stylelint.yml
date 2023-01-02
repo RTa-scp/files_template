@@ -15,8 +15,6 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
-        with:
-          cache: pnpm
 
       - name: Install dependencies
         run: pnpm install stylelint stylelint-config-standard stylelint-config-recess-order stylelint-config-prettier
