@@ -20,15 +20,4 @@ jobs:
       - name: install reviewdog
         uses: reviewdog/action-setup@v1
       - name: stylecheck
-        run: pnpm stylelint "**/*.css" --no-color --fix | reviewdog -f="stylelint" -name="stylelint" -reporter="github-pr-check" -level="error" -filter-mode="nofilter" -fail-on-error="false"
-      - name: commit and push
-        run: |
-          git config --global user.name 'Github Actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          if (git diff --shortstat | grep '[0-9]'); then \
-            git add .; \
-            git commit -m "Changed by github-actions"; \
-            git push -u origin dev; \
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm stylelint "**/*.css" --no-color --fix | reviewdog -f="stylelint" -name="stylelint" -reporter="github-pr-review" -level="error" -filter-mode="nofilter" -fail-on-error="false"
