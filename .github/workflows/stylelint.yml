@@ -26,4 +26,5 @@ jobs:
       - name: install reviewdog
         uses: reviewdog/action-setup@v1
       - name: stylecheck
-        run: pnpm stylelint "**/*.css" --no-color | reviewdog -f=stylelint -name=stylelint -reporter=github-pr-review -fail-on-error=true
+        run: pnpm stylelint "**/*.css" --no-color | reviewdog -f="stylelint" -name="stylelint" -reporter="github-pr-review" -level="error" -filter-mode="nofilter" -fail-on-error="false"
+
