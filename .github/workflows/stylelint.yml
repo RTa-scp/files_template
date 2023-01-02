@@ -11,7 +11,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - run: npm ci
+      - name: depencies
+        run: npm install stylelint stylelint-config-standard stylelint-config-recess-order stylelint-config-prettier
       - uses: reviewdog/action-setup@v1
       - run: reviewdog -version
       - name: stylelint
