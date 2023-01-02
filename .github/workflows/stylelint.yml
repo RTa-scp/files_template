@@ -1,24 +1,23 @@
-name: reviewdog
+name: code_analysis
 on: [pull_request]
 jobs:
-  stylelint:
-    name: runner / stylelint
+  code_analysis:
+    name: runner
     runs-on: ubuntu-latest
+    env:
+      REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      
       - uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: 16
+
       - name: depencies
         run: npm install stylelint stylelint-config-standard stylelint-config-recess-order stylelint-config-prettier
-      - uses: reviewdog/action-setup@v1
-      - run: reviewdog -version
-      - name: stylelint
-        env:
-          # reviewdogはこの環境変数でTokenを参照する
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          npx stylelint "**/*.css" --no-color --fix \
-            | reviewdog -f="stylelint" -name="stylelint" -reporter="github-pr-check" -level="error" -filter-mode="nofilter" -fail-on-error="false"
+        
+      - name: install reviewdog
+        uses: reviewdog/action-setup@v1
+      - name: reviewdog
+        run: reviewdog -reporter=github-pr-check
