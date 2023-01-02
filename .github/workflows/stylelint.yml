@@ -20,7 +20,7 @@ jobs:
       - name: install reviewdog
         uses: reviewdog/action-setup@v1
       - name: stylecheck
-        run: pnpm run stylelint "**/*.css" --no-color | reviewdog -f="stylelint" -name="stylelint" -reporter="github-pr-check" -level="warning" -filter-mode="nofilter" -fail-on-error="false"
+        run: pnpm run stylelint "**/*.css" --no-color --fix | reviewdog -f="stylelint" -name="stylelint" -reporter="github-pr-check" -level="warning" -filter-mode="nofilter" -fail-on-error="false"
       - name: apply fixes
         run: pnpm run stylelint "**/*.css" --no-color --fix --fix-errors --fix-warnings
       - name: commit and push
