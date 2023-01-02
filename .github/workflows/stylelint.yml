@@ -6,17 +6,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
-
-      - name: depencies
-        run: npm install stylelint stylelint-config-standard stylelint-config-recess-order stylelint-config-prettier
-
+          node-version: '16'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+      - run: npm ci
+      - uses: reviewdog/action-setup@v1
+      - run: reviewdog -version
       - name: stylelint
-        uses: reviewdog/action-stylelint@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review # Change reporter.
-          stylelint_input: '**/*.css'
+        env:
+          # reviewdogはこの環境変数でTokenを参照する
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx stylelint "**/*.css" --no-color --fix \
+            | reviewdog -f="stylelint" -name="stylelint" -reporter="github-pr-check" -level="error" -filter-mode="nofilter" -fail-on-error="false"
