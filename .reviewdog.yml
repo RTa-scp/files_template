@@ -1,3 +1,0 @@
-runner:
-  stylelint:
-    cmd: yarn run stylelint app/**/*.{css,scss}
