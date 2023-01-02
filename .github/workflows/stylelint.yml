@@ -13,10 +13,14 @@ jobs:
         with:
           version: 7.0.0
 
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
 
         
       - name: install reviewdog
